@@ -1,0 +1,129 @@
+# ==============================================================================
+# HANZALA CAR WASH - COMPREHENSIVE .GITIGNORE
+# Configured for both Frontend (Vue 3 / Vite / Node) & Backend (Laravel / PHP / Node / DB)
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# 1. FRONTEND ENVIRONMENT (Vue 3, Vite, Node, Bundlers)
+# ------------------------------------------------------------------------------
+node_modules/
+dist/
+dist-ssr/
+build/
+out/
+.cache/
+.vite/
+.parcel-cache/
+
+# Node Package Manager Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+bun.lock*
+
+# Local Frontend Environment Overrides
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.local
+
+# ------------------------------------------------------------------------------
+# 2. BACKEND ENVIRONMENT (Laravel, PHP, Composer, Python, Node Backend)
+# ------------------------------------------------------------------------------
+# Composer Dependencies
+/vendor/
+composer.phar
+composer.lock.backup
+
+# Sensitive Environment & Secrets (SRS Section 9.2 & 17)
+.env
+.env.backup
+.env.production
+.env.staging
+
+# Laravel Storage & Cache Folders
+/storage/app/*
+!/storage/app/public/
+/storage/framework/cache/*
+!/storage/framework/cache/.gitignore
+/storage/framework/sessions/*
+!/storage/framework/sessions/.gitignore
+/storage/framework/views/*
+!/storage/framework/views/.gitignore
+/storage/logs/*
+!/storage/logs/.gitignore
+/storage/*.key
+
+# Laravel Bootstrap Cache
+/bootstrap/cache/*
+!/bootstrap/cache/.gitignore
+
+# Python Backend / Scraping / Worker Scripts (if applicable)
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv/
+
+# ------------------------------------------------------------------------------
+# 3. DATABASE, BACKUPS & LOCAL STORAGE
+# ------------------------------------------------------------------------------
+*.sqlite
+*.sqlite3
+*.db
+database.sqlite
+*.sql
+*.sql.gz
+*.dump
+/backups/
+/storage/backups/
+
+# ------------------------------------------------------------------------------
+# 4. TESTING, COVERAGE & PLAYWRIGHT ARTIFACTS
+# ------------------------------------------------------------------------------
+coverage/
+.nyc_output/
+.phpunit.result.cache
+/playwright-report/
+/test-results/
+.playwright/
+
+# ------------------------------------------------------------------------------
+# 5. OPERATING SYSTEM & EDITOR ARTIFACTS
+# ------------------------------------------------------------------------------
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msm
+*.msp
+
+# IDEs & Text Editors
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.history/
