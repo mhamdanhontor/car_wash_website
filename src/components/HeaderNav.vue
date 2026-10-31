@@ -1,8 +1,8 @@
 <template>
-  <header class="site-header">
+  <header class="site-header" ref="headerRef">
     <!-- Top Announcement Bar -->
     <div class="top-announcement" v-if="store.business.announcement">
-      <div class="container d-flex justify-between align-center">
+      <div class="header-inner d-flex justify-between align-center">
         <span class="announcement-text">{{ store.business.announcement }}</span>
         <div class="top-contact d-none-mobile">
           <span>📞 {{ store.business.phone }}</span>
@@ -14,7 +14,7 @@
 
     <!-- Main Navigation Bar -->
     <nav class="main-navbar">
-      <div class="container nav-container">
+      <div class="header-inner nav-container">
         <!-- Logo -->
         <a href="#home" class="brand-logo" @click.prevent="$emit('navigate', 'home')">
           <div class="logo-icon">
@@ -30,21 +30,153 @@
           </div>
         </a>
 
-        <!-- Desktop Navigation Links -->
+        <!-- Desktop Navigation Links with Dropdown for clean aesthetic -->
         <ul class="nav-links d-none-mobile">
-          <li><a href="#home" @click.prevent="$emit('navigate', 'home')" :class="{ active: currentView === 'home' }">Home</a></li>
-          <li><a href="#services" @click.prevent="$emit('navigate', 'services')">Services</a></li>
-          <li><a href="#book" @click.prevent="$emit('open-booking')">Book Appointment</a></li>
-          <li><a href="#gallery" @click.prevent="$emit('navigate', 'gallery')">Gallery</a></li>
-          <li><a href="#reviews" @click.prevent="$emit('navigate', 'reviews')">Reviews</a></li>
-          <li><a href="#about" @click.prevent="$emit('navigate', 'about')">About</a></li>
-          <li><a href="#contact" @click.prevent="$emit('navigate', 'contact')">Contact</a></li>
+          <li>
+            <a 
+              href="#home" 
+              @click.prevent="handleLinkClick('home')" 
+              :class="{ active: currentView === 'home' }"
+            >
+              Home
+            </a>
+          </li>
+          <li>
+            <a 
+              href="#services" 
+              @click.prevent="handleLinkClick('services')"
+              :class="{ active: currentView === 'services' }"
+            >
+              Services
+            </a>
+          </li>
+          <li>
+            <a 
+              href="#vehicles" 
+              @click.prevent="handleLinkClick('vehicles')"
+              :class="{ active: currentView === 'vehicles' }"
+            >
+              Vehicle Types
+            </a>
+          </li>
+
+          <!-- Explore Dropdown (Neat & Clean even on max width) -->
+          <li 
+            class="nav-dropdown-wrapper"
+            @mouseenter="dropdownOpen = true"
+            @mouseleave="dropdownOpen = false"
+          >
+            <button 
+              type="button"
+              class="dropdown-trigger-btn"
+              :class="{ active: dropdownOpen }"
+              @click="dropdownOpen = !dropdownOpen"
+              aria-haspopup="true"
+              :aria-expanded="dropdownOpen"
+            >
+              <span>Explore</span>
+              <svg 
+                class="dropdown-chevron" 
+                :class="{ 'rotate-180': dropdownOpen }"
+                width="14" 
+                height="14" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                stroke-width="2.5"
+              >
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+
+            <!-- Dropdown Menu -->
+            <transition name="dropdown-fade">
+              <div class="nav-dropdown-menu" v-if="dropdownOpen">
+                <div class="dropdown-pointer"></div>
+                <div class="dropdown-content">
+                  <a 
+                    href="#gallery" 
+                    class="dropdown-item" 
+                    @click.prevent="handleDropdownSelect('gallery')"
+                  >
+                    <span class="dropdown-item-icon">✨</span>
+                    <div class="dropdown-item-text">
+                      <span class="item-title">Before & After Gallery</span>
+                      <span class="item-desc">High-definition detailing transformations</span>
+                    </div>
+                  </a>
+
+                  <a 
+                    href="#reviews" 
+                    class="dropdown-item" 
+                    @click.prevent="handleDropdownSelect('reviews')"
+                  >
+                    <span class="dropdown-item-icon">⭐</span>
+                    <div class="dropdown-item-text">
+                      <span class="item-title">Customer Reviews</span>
+                      <span class="item-desc">4.9/5 Rating from verified drivers</span>
+                    </div>
+                  </a>
+
+                  <a 
+                    href="#why-us" 
+                    class="dropdown-item" 
+                    @click.prevent="handleDropdownSelect('why-us')"
+                  >
+                    <span class="dropdown-item-icon">🛡️</span>
+                    <div class="dropdown-item-text">
+                      <span class="item-title">Why Choose Us</span>
+                      <span class="item-desc">5 Pillars of luxury automotive care</span>
+                    </div>
+                  </a>
+
+                  <a 
+                    href="#loyalty" 
+                    class="dropdown-item" 
+                    @click.prevent="handleLoyaltyClick"
+                  >
+                    <span class="dropdown-item-icon">🎁</span>
+                    <div class="dropdown-item-text">
+                      <span class="item-title">Loyalty & Rewards</span>
+                      <span class="item-desc">Earn wash points & exclusive VIP passes</span>
+                    </div>
+                  </a>
+
+                  <a 
+                    href="#contact" 
+                    class="dropdown-item" 
+                    @click.prevent="handleDropdownSelect('contact')"
+                  >
+                    <span class="dropdown-item-icon">📍</span>
+                    <div class="dropdown-item-text">
+                      <span class="item-title">Location & Hours</span>
+                      <span class="item-desc">Main Boulevard Gulberg III & DHA Phase 5</span>
+                    </div>
+                  </a>
+
+                  <div class="dropdown-divider"></div>
+
+                  <a 
+                    href="#policies" 
+                    class="dropdown-item" 
+                    @click.prevent="handlePolicyClick"
+                  >
+                    <span class="dropdown-item-icon">📜</span>
+                    <div class="dropdown-item-text">
+                      <span class="item-title">Customer Guarantee & Policies</span>
+                      <span class="item-desc">Transparent cancellation & refund terms</span>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </transition>
+          </li>
         </ul>
 
         <!-- Right Side Actions -->
         <div class="nav-actions">
           <!-- My Account / Customer Portal -->
-          <button class="btn btn-gold-outline btn-sm" @click="$emit('open-account')">
+          <button class="btn btn-gold-outline btn-sm" @click="$emit('open-account')" title="View Pass, Bookings & Loyalty">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
               <circle cx="12" cy="7" r="4"></circle>
@@ -53,7 +185,7 @@
           </button>
 
           <!-- Admin & Staff Portal Button with Badge -->
-          <button class="btn btn-outline btn-sm staff-badge-btn" @click="$emit('open-admin')">
+          <button class="btn btn-outline btn-sm staff-badge-btn" @click="$emit('open-admin')" title="Access Staff Operations & Management">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <rect x="3" y="3" width="7" height="7"></rect>
               <rect x="14" y="3" width="7" height="7"></rect>
@@ -65,7 +197,7 @@
           </button>
 
           <!-- Book Now CTA -->
-          <button class="btn btn-primary btn-sm d-none-mobile" @click="$emit('open-booking')">
+          <button class="btn btn-primary btn-sm d-none-mobile cta-book-btn" @click="$emit('open-booking')">
             Book Now
           </button>
 
@@ -90,10 +222,10 @@
       <ul class="mobile-links">
         <li><a href="#home" @click="handleMobileNav('home')">Home</a></li>
         <li><a href="#services" @click="handleMobileNav('services')">Services & Pricing</a></li>
-        <li><a href="#book" @click="handleMobileAction('booking')">Book Appointment</a></li>
+        <li><a href="#vehicles" @click="handleMobileNav('vehicles')">Vehicle Types</a></li>
         <li><a href="#gallery" @click="handleMobileNav('gallery')">Before & After Gallery</a></li>
         <li><a href="#reviews" @click="handleMobileNav('reviews')">Customer Reviews</a></li>
-        <li><a href="#about" @click="handleMobileNav('about')">About Us</a></li>
+        <li><a href="#why-us" @click="handleMobileNav('why-us')">Why Choose Us</a></li>
         <li><a href="#contact" @click="handleMobileNav('contact')">Location & Contact</a></li>
       </ul>
       <div class="mobile-drawer-actions">
@@ -112,7 +244,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { store } from '../store/carWashStore';
 
 const props = defineProps({
@@ -122,8 +254,10 @@ const props = defineProps({
   }
 });
 
-const emit = defineEmits(['navigate', 'open-booking', 'open-account', 'open-admin']);
+const emit = defineEmits(['navigate', 'open-booking', 'open-account', 'open-admin', 'open-policy']);
 
+const headerRef = ref(null);
+const dropdownOpen = ref(false);
 const mobileMenuOpen = ref(false);
 
 const currentRoleLabel = computed(() => {
@@ -138,6 +272,26 @@ const currentRoleLabel = computed(() => {
   return map[store.auth.userRole] || 'Admin';
 });
 
+function handleLinkClick(sec) {
+  dropdownOpen.value = false;
+  emit('navigate', sec);
+}
+
+function handleDropdownSelect(sec) {
+  dropdownOpen.value = false;
+  emit('navigate', sec);
+}
+
+function handleLoyaltyClick() {
+  dropdownOpen.value = false;
+  emit('open-account');
+}
+
+function handlePolicyClick() {
+  dropdownOpen.value = false;
+  emit('open-policy', 'guarantee');
+}
+
 function handleMobileNav(section) {
   mobileMenuOpen.value = false;
   emit('navigate', section);
@@ -149,6 +303,21 @@ function handleMobileAction(action) {
   if (action === 'account') emit('open-account');
   if (action === 'admin') emit('open-admin');
 }
+
+// Close dropdown on click outside
+function handleClickOutside(event) {
+  if (headerRef.value && !headerRef.value.contains(event.target)) {
+    dropdownOpen.value = false;
+  }
+}
+
+onMounted(() => {
+  document.addEventListener('click', handleClickOutside);
+});
+
+onUnmounted(() => {
+  document.removeEventListener('click', handleClickOutside);
+});
 </script>
 
 <style scoped>
@@ -160,6 +329,7 @@ function handleMobileAction(action) {
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--border-light);
+  width: 100%;
 }
 
 .top-announcement {
@@ -168,6 +338,17 @@ function handleMobileAction(action) {
   padding: 0.35rem 0;
   font-size: 0.8rem;
   color: var(--primary-light);
+  width: 100%;
+}
+
+/* Full Width Fluid Nav Container */
+.header-inner {
+  width: 100%;
+  max-width: 1720px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: clamp(1.25rem, 3.5vw, 3.5rem);
+  padding-right: clamp(1.25rem, 3.5vw, 3.5rem);
 }
 
 .announcement-text {
@@ -188,6 +369,7 @@ function handleMobileAction(action) {
 
 .main-navbar {
   padding: 0.85rem 0;
+  width: 100%;
 }
 
 .nav-container {
@@ -247,16 +429,17 @@ function handleMobileAction(action) {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 1.75rem;
+  gap: 2rem;
   list-style: none;
 }
 
 .nav-links a {
-  font-size: 0.92rem;
+  font-size: 0.95rem;
   font-weight: 500;
   color: var(--text-secondary);
   position: relative;
-  padding: 0.25rem 0;
+  padding: 0.35rem 0;
+  transition: color 0.2s ease;
 }
 
 .nav-links a:hover, .nav-links a.active {
@@ -274,6 +457,146 @@ function handleMobileAction(action) {
   border-radius: 2px;
 }
 
+/* Dropdown Wrapper & Trigger */
+.nav-dropdown-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.dropdown-trigger-btn {
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.6rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: var(--transition);
+}
+
+.dropdown-trigger-btn:hover,
+.dropdown-trigger-btn.active {
+  color: var(--primary);
+  background: rgba(245, 158, 11, 0.08);
+  border-color: rgba(245, 158, 11, 0.2);
+}
+
+.dropdown-chevron {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.rotate-180 {
+  transform: rotate(180deg);
+}
+
+/* Dropdown Menu Popup */
+.nav-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 320px;
+  background: rgba(18, 22, 30, 0.98);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7), 0 0 20px rgba(245, 158, 11, 0.15);
+  padding: 0.6rem;
+  z-index: 1000;
+}
+
+.dropdown-pointer {
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 12px;
+  height: 12px;
+  background: #12161e;
+  border-top: 1px solid rgba(245, 158, 11, 0.3);
+  border-left: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.dropdown-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.65rem 0.85rem;
+  border-radius: var(--radius-md);
+  transition: background 0.2s ease, transform 0.2s ease;
+  text-decoration: none;
+}
+
+.dropdown-item:hover {
+  background: rgba(245, 158, 11, 0.12);
+  transform: translateX(3px);
+}
+
+.dropdown-item-icon {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-light);
+}
+
+.dropdown-item-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.item-title {
+  color: var(--text-primary);
+  font-size: 0.88rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.dropdown-item:hover .item-title {
+  color: var(--primary);
+}
+
+.item-desc {
+  color: var(--text-muted);
+  font-size: 0.73rem;
+  line-height: 1.2;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background: var(--border-light);
+  margin: 0.35rem 0;
+}
+
+/* Dropdown Animation */
+.dropdown-fade-enter-active,
+.dropdown-fade-leave-active {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.dropdown-fade-enter-from,
+.dropdown-fade-leave-to {
+  opacity: 0;
+  transform: translateX(-50%) translateY(-8px);
+}
+
 /* Right Nav Actions */
 .nav-actions {
   display: flex;
@@ -289,6 +612,11 @@ function handleMobileAction(action) {
   font-size: 0.7rem;
   font-weight: 700;
   text-transform: uppercase;
+}
+
+.cta-book-btn {
+  font-weight: 700;
+  padding: 0.55rem 1.15rem;
 }
 
 .mobile-toggle {

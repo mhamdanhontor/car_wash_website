@@ -1,6 +1,108 @@
 <template>
   <div class="booking-wizard-backdrop" @click.self="$emit('close')">
-    <div class="wizard-modal">
+    <!-- ==============================================
+         DEDICATED CELEBRATION MODAL (Step 6)
+         A beautiful, high-end celebration modal appearing on order placement
+         ============================================== -->
+    <div v-if="currentStep === 6 && confirmedBooking" class="order-success-modal">
+      <button class="modal-close-corner-btn" @click="$emit('close')" aria-label="Close">✕</button>
+
+      <div class="success-top-badge-area">
+        <div class="celebration-ring">
+          <span class="celebration-emoji">✨</span>
+        </div>
+        <span class="status-pill-celebrate">Order Confirmed & Bay Reserved</span>
+        <h2 class="success-main-heading">Wash Reservation Successful!</h2>
+        <p class="success-subheading">
+          Your bay has been secured at {{ store.business.branches[0].name }}. A digital pass & SMS confirmation have been generated.
+        </p>
+
+        <!-- Ref Code Bar with 1-click Copy -->
+        <div class="booking-ref-bar">
+          <span class="ref-title">Booking Ref:</span>
+          <span class="ref-value">{{ confirmedBooking.id }}</span>
+          <button class="copy-btn-action" @click="copyReferenceCode(confirmedBooking.id)" :title="refCopied ? 'Copied!' : 'Copy to clipboard'">
+            <span v-if="refCopied">✓ Copied</span>
+            <span v-else>📋 Copy Code</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Luxury Digital Boarding Pass Ticket (SRS Section 8) -->
+      <div class="luxury-pass-ticket" id="printablePass">
+        <div class="ticket-header">
+          <div class="brand-row">
+            <span class="ticket-brand-main">Hanzala</span>
+            <span class="ticket-brand-sub">Car Wash & Detailing</span>
+          </div>
+          <span class="ticket-badge-pill">Verified Pass</span>
+        </div>
+
+        <div class="ticket-main-grid">
+          <div class="ticket-qr-zone">
+            <div class="qr-box-inner">
+              <canvas ref="qrCanvas" class="qr-canvas-element"></canvas>
+            </div>
+            <span class="qr-scan-hint">Scan at Bay Entrance</span>
+          </div>
+
+          <div class="ticket-specs-zone">
+            <div class="spec-row">
+              <span class="s-label">Vehicle</span>
+              <span class="s-val text-white font-weight-bold">
+                {{ confirmedBooking.vehicleMake }} {{ confirmedBooking.vehicleModel }} ({{ confirmedBooking.vehicleReg }})
+              </span>
+            </div>
+            <div class="spec-row">
+              <span class="s-label">Service Package</span>
+              <span class="s-val text-gold font-weight-bold">{{ confirmedBooking.serviceName }}</span>
+            </div>
+            <div class="spec-row" v-if="confirmedBooking.addOns && confirmedBooking.addOns.length">
+              <span class="s-label">Add-ons</span>
+              <span class="s-val text-secondary">{{ formatAddons(confirmedBooking.addOns) }}</span>
+            </div>
+            <div class="spec-row">
+              <span class="s-label">Date & Time</span>
+              <span class="s-val text-white">{{ confirmedBooking.bookingDate }} at {{ confirmedBooking.bookingTime }}</span>
+            </div>
+            <div class="spec-row">
+              <span class="s-label">Allocated Bay</span>
+              <span class="s-val text-white">Main Hub - Gulberg III (Bay 2)</span>
+            </div>
+            <div class="spec-row highlight-amount">
+              <span class="s-label">Total Amount</span>
+              <span class="s-val text-gold font-weight-bold">
+                Rs. {{ confirmedBooking.totalAmount }} ({{ confirmedBooking.paymentStatus }})
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ticket-footer">
+          <span>📞 Support: {{ store.business.phone }}</span>
+          <span>•</span>
+          <span>⏱ Free Cancellation up to 2 hours before</span>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="success-actions-row">
+        <button class="btn btn-outline" @click="printPass">
+          🖨️ Print / Save PDF Receipt
+        </button>
+        <button class="btn btn-gold-outline" @click="downloadCalendarInvite">
+          📅 Add to Calendar (.ics)
+        </button>
+        <button class="btn btn-primary" @click="finishAndGoToAccount">
+          Go to My Bookings →
+        </button>
+      </div>
+    </div>
+
+    <!-- ==============================================
+         STANDARD BOOKING WIZARD (Steps 1-5)
+         ============================================== -->
+    <div v-else class="wizard-modal">
       <!-- Wizard Header -->
       <div class="wizard-header">
         <div class="d-flex justify-between align-center">
@@ -9,6 +111,13 @@
             <p class="wizard-subtitle">Instant reservation with priority bay guarantee</p>
           </div>
           <button class="modal-close-btn" @click="$emit('close')" aria-label="Close modal">✕</button>
+        </div>
+
+        <!-- Inline Validation Warning Banner -->
+        <div v-if="validationWarning" class="wizard-warning-banner">
+          <span class="warn-icon">⚠️</span>
+          <span class="warn-text">{{ validationWarning }}</span>
+          <button type="button" class="close-warning-btn" @click="validationWarning = ''">✕</button>
         </div>
 
         <!-- 5-Step Progress Bar matching mockup -->
@@ -421,79 +530,6 @@
             </div>
           </div>
         </div>
-
-        <!-- ==============================================
-             STEP 6: CONFIRMATION & DIGITAL PASS (SRS Section 8)
-             ============================================== -->
-        <div v-if="currentStep === 6 && confirmedBooking" class="step-content text-center">
-          <div class="confetti-indicator">🎉</div>
-          <h2 class="text-white font-weight-bold">Booking Confirmed!</h2>
-          <p class="text-secondary">Your washing bay has been reserved. Please show this digital pass upon arrival.</p>
-
-          <!-- Printable Digital Pass Card (Matching SRS Section 8) -->
-          <div class="digital-pass-card glass-card mx-auto mt-4" id="printablePass">
-            <div class="pass-header">
-              <div class="pass-brand">
-                <span class="logo-title">Hanzala</span> <span class="logo-sub">Car Wash</span>
-              </div>
-              <div class="pass-ref">
-                <span class="ref-label">Booking Ref:</span>
-                <span class="ref-code">{{ confirmedBooking.id }}</span>
-              </div>
-            </div>
-
-            <div class="pass-body">
-              <!-- QR Code Canvas for live camera scanning -->
-              <div class="qr-code-frame">
-                <canvas ref="qrCanvas" class="qr-canvas"></canvas>
-                <span class="qr-sub">Scan for instant check-in</span>
-              </div>
-
-              <div class="pass-details-grid">
-                <div class="detail-item">
-                  <span class="d-label">Vehicle</span>
-                  <span class="d-val">{{ confirmedBooking.vehicleMake }} {{ confirmedBooking.vehicleModel }} ({{ confirmedBooking.vehicleReg }})</span>
-                </div>
-                <div class="detail-item">
-                  <span class="d-label">Service</span>
-                  <span class="d-val text-gold">{{ confirmedBooking.serviceName }}</span>
-                </div>
-                <div class="detail-item">
-                  <span class="d-label">Date & Time</span>
-                  <span class="d-val">{{ confirmedBooking.bookingDate }} at {{ confirmedBooking.bookingTime }}</span>
-                </div>
-                <div class="detail-item">
-                  <span class="d-label">Location</span>
-                  <span class="d-val">Main Hub - Gulberg III (Bay 2)</span>
-                </div>
-                <div class="detail-item">
-                  <span class="d-label">Amount & Status</span>
-                  <span class="d-val">Rs. {{ confirmedBooking.totalAmount }} ({{ confirmedBooking.paymentStatus }})</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Pass footer -->
-            <div class="pass-footer">
-              <div class="text-muted small">
-                📞 Help Desk: {{ store.business.phone }} • Cancellation Cutoff: 2 Hours
-              </div>
-            </div>
-          </div>
-
-          <!-- Actions -->
-          <div class="confirmation-actions mt-4">
-            <button class="btn btn-outline" @click="printPass">
-              🖨️ Print / Save PDF Receipt
-            </button>
-            <button class="btn btn-gold-outline" @click="downloadCalendarInvite">
-              📅 Add to Calendar (.ics)
-            </button>
-            <button class="btn btn-primary" @click="finishAndGoToAccount">
-              Go to My Bookings →
-            </button>
-          </div>
-        </div>
       </div>
 
       <!-- Wizard Navigation Footer (Back / Next) -->
@@ -547,6 +583,35 @@ const couponMessage = ref('');
 const useLoyaltyPoints = ref(false);
 const confirmedBooking = ref(null);
 const qrCanvas = ref(null);
+const refCopied = ref(false);
+const validationWarning = ref('');
+
+function showWarning(msg) {
+  validationWarning.value = msg;
+  setTimeout(() => {
+    if (validationWarning.value === msg) {
+      validationWarning.value = '';
+    }
+  }, 4500);
+}
+
+function copyReferenceCode(refCode) {
+  if (navigator && navigator.clipboard) {
+    navigator.clipboard.writeText(refCode);
+  }
+  refCopied.value = true;
+  setTimeout(() => {
+    refCopied.value = false;
+  }, 3000);
+}
+
+function formatAddons(addonIds) {
+  if (!addonIds || !addonIds.length) return '';
+  return addonIds.map(id => {
+    const a = store.addOns.find(item => item.id === id);
+    return a ? a.name : id;
+  }).join(', ');
+}
 
 const steps = [
   { number: 1, label: 'Service' },
@@ -614,10 +679,10 @@ const monthDays = computed(() => {
 });
 
 function prevMonth() {
-  alert('Calendar is currently displaying current operating period (October 2026).');
+  showWarning('Calendar is currently displaying current operating period (October 2026).');
 }
 function nextMonth() {
-  alert('Appointments beyond 14 days open next week.');
+  showWarning('Appointments beyond 14 days open next week.');
 }
 
 // Available Time Slots
@@ -674,22 +739,23 @@ function goToStep(stepNum) {
 }
 
 function validateAndNext() {
+  validationWarning.value = '';
   if (currentStep.value === 1) {
-    if (!form.serviceId) return alert('Please select a wash service');
+    if (!form.serviceId) return showWarning('Please select a wash service package to continue.');
     currentStep.value = 2;
   } else if (currentStep.value === 2) {
     if (!form.vehicleMake || !form.vehicleModel || !form.vehicleReg) {
-      return alert('Please enter vehicle make, model and registration plate');
+      return showWarning('Please enter your vehicle make, model, and registration plate.');
     }
     currentStep.value = 3;
   } else if (currentStep.value === 3) {
     if (!form.bookingDate || !form.bookingTime) {
-      return alert('Please select date and time slot');
+      return showWarning('Please select an appointment date and preferred time slot.');
     }
     currentStep.value = 4;
   } else if (currentStep.value === 4) {
     if (!form.customerName || !form.customerPhone) {
-      return alert('Please enter your full name and mobile phone number');
+      return showWarning('Please enter your full name and mobile phone number.');
     }
     currentStep.value = 5;
   }
@@ -1514,6 +1580,334 @@ function finishAndGoToAccount() {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+/* Inline Warning Banner */
+.wizard-warning-banner {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #fca5a5;
+  padding: 0.65rem 1rem;
+  border-radius: var(--radius-md);
+  margin-top: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  animation: shake 0.3s ease;
+}
+
+.warn-icon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.warn-text {
+  flex: 1;
+}
+
+.close-warning-btn {
+  background: transparent;
+  color: #fca5a5;
+  font-size: 0.95rem;
+  padding: 0 0.3rem;
+  cursor: pointer;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+/* ========================================================
+   DEDICATED CELEBRATION ORDER SUCCESS MODAL
+   ======================================================== */
+.order-success-modal {
+  background: #131720;
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-xl);
+  max-width: 680px;
+  width: 100%;
+  max-height: 94vh;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.9), 0 0 40px rgba(245, 158, 11, 0.2);
+  animation: modalEnter 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 2.25rem 2rem;
+  position: relative;
+}
+
+.modal-close-corner-btn {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-light);
+  color: var(--text-muted);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.modal-close-corner-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+.success-top-badge-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 1.75rem;
+}
+
+.celebration-ring {
+  width: 76px;
+  height: 76px;
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.25) 0%, rgba(16, 185, 129, 0.2) 100%);
+  border: 2px solid var(--primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 32px rgba(245, 158, 11, 0.45);
+  margin-bottom: 0.85rem;
+  animation: pulse 2s infinite;
+}
+
+.celebration-emoji {
+  font-size: 2.3rem;
+}
+
+.status-pill-celebrate {
+  display: inline-block;
+  background: rgba(16, 185, 129, 0.18);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  padding: 0.2rem 0.85rem;
+  border-radius: var(--radius-full);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.success-main-heading {
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.2;
+  margin-bottom: 0.35rem;
+}
+
+.success-subheading {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  max-width: 480px;
+}
+
+.booking-ref-bar {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  padding: 0.45rem 1rem;
+  border-radius: var(--radius-full);
+  margin-top: 1rem;
+}
+
+.ref-title {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.ref-value {
+  font-family: monospace;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--primary);
+  letter-spacing: 0.05em;
+}
+
+.copy-btn-action {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-medium);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.2rem 0.65rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.copy-btn-action:hover {
+  background: var(--primary);
+  color: #000;
+}
+
+/* Luxury Boarding Pass Ticket */
+.luxury-pass-ticket {
+  background: #171c26;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  margin-bottom: 1.75rem;
+}
+
+.ticket-header {
+  background: linear-gradient(135deg, #222938 0%, #292215 100%);
+  border-bottom: 1px solid var(--border-gold);
+  padding: 0.9rem 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ticket-brand-main {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #fff;
+  margin-right: 0.4rem;
+}
+
+.ticket-brand-sub {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--primary);
+  text-transform: uppercase;
+}
+
+.ticket-badge-pill {
+  background: rgba(245, 158, 11, 0.2);
+  color: var(--primary);
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius-full);
+}
+
+.ticket-main-grid {
+  padding: 1.25rem;
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.ticket-qr-zone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.qr-box-inner {
+  background: #fff;
+  padding: 0.45rem;
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.qr-canvas-element {
+  width: 120px !important;
+  height: 120px !important;
+  display: block;
+}
+
+.qr-scan-hint {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-top: 0.4rem;
+  letter-spacing: 0.05em;
+}
+
+.ticket-specs-zone {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.spec-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.06);
+}
+
+.spec-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.s-label {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+}
+
+.s-val {
+  text-align: right;
+}
+
+.highlight-amount {
+  margin-top: 0.25rem;
+  padding-top: 0.25rem;
+  border-top: 1px solid var(--border-light);
+}
+
+.ticket-footer {
+  background: rgba(0, 0, 0, 0.25);
+  border-top: 1px solid var(--border-light);
+  padding: 0.65rem 1.25rem;
+  font-size: 0.73rem;
+  color: var(--text-muted);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.success-actions-row {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+}
+
+@media (max-width: 640px) {
+  .ticket-main-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .spec-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.15rem;
+  }
+  .s-val {
+    text-align: left;
+  }
+  .success-actions-row {
+    flex-direction: column;
+  }
 }
 
 @media (max-width: 768px) {

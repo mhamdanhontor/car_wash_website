@@ -7,17 +7,17 @@
         <!-- Trust Tag -->
         <div class="hero-tag">
           <span class="pulse-dot"></span>
-          <span>Lahore's #1 Rated Luxury Detailing Center</span>
+          <span>{{ store.business?.heroTrustBadge || "Lahore's #1 Rated Luxury Detailing Center" }}</span>
         </div>
 
         <h1 class="hero-title">
-          Premium <br />
-          <span class="gradient-text">Car Wash &</span> <br />
-          Detailing Services
+          {{ store.business?.heroTitlePrefix || "Premium" }} <br />
+          <span class="gradient-text">{{ store.business?.heroTitleHighlight || "Car Wash &" }}</span> <br />
+          {{ store.business?.heroTitleSuffix || "Detailing Services" }}
         </h1>
 
         <p class="hero-subtitle">
-          Professional cleaning, detailing and care for your vehicle. We combine steam sanitization, active snow foam, and ceramic protection to restore that showroom shine.
+          {{ store.business?.slogan || "Professional cleaning, detailing and care for your vehicle. We combine steam sanitization, active snow foam, and ceramic protection to restore that showroom shine." }}
         </p>
 
         <!-- Feature Badges from Mockup -->
@@ -80,7 +80,7 @@
             <div class="stat-indicator online"></div>
             <div>
               <div class="stat-label">Live Capacity</div>
-              <div class="stat-value">3 Bays Operating</div>
+              <div class="stat-value">{{ store.business?.capacityLabel || "3 Bays Operating" }}</div>
             </div>
           </div>
 
@@ -89,7 +89,7 @@
             <div class="stat-icon-gold">⚡</div>
             <div>
               <div class="stat-label">Fast Service</div>
-              <div class="stat-value">25 - 55 Mins Average</div>
+              <div class="stat-value">{{ store.business?.serviceSpeedLabel || "25 - 55 Mins Average" }}</div>
             </div>
           </div>
         </div>
@@ -99,6 +99,7 @@
 </template>
 
 <script setup>
+import { store } from '../store/carWashStore';
 defineEmits(['open-booking', 'navigate']);
 </script>
 

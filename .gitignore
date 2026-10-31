@@ -29,6 +29,7 @@ bun.lock*
 .env.test.local
 .env.production.local
 *.local
+verification_screenshots/
 
 # ------------------------------------------------------------------------------
 # 2. BACKEND ENVIRONMENT (Laravel, PHP, Composer, Python, Node Backend)

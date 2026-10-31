@@ -1,0 +1,764 @@
+{
+  "business": {
+    "name": "Hanzala Car Wash",
+    "tagline": "Premium Car Wash & Detailing Services",
+    "slogan": "Professional cleaning, detailing and care for your vehicle.",
+    "phone": "+92 300 8492000",
+    "whatsapp": "+923008492000",
+    "email": "info@hanzalacarwash.com",
+    "taxRatePercent": 0,
+    "currency": "PKR",
+    "currencySymbol": "Rs.",
+    "operatingHours": "Monday - Sunday: 8:00 AM - 10:00 PM",
+    "announcement": "✨ Grand Weekend Offer: Get 20% OFF on Premium Detailing! Use code PREMIUM20",
+    "branches": [
+      {
+        "id": "b1",
+        "name": "Main Hub - Gulberg III",
+        "address": "Plot 42-A, Main Boulevard, Gulberg III, Lahore",
+        "bays": 3,
+        "phone": "+92 300 8492001"
+      },
+      {
+        "id": "b2",
+        "name": "DHA Phase 5 Studio",
+        "address": "Sector C, Commercial Avenue, DHA Phase 5, Lahore",
+        "bays": 2,
+        "phone": "+92 300 8492002"
+      }
+    ]
+  },
+  "policy": {
+    "cancellationCutoffHours": 2,
+    "cancellationDeductionPercent": 5,
+    "noShowGracePeriodMins": 20,
+    "maxRefundAllowedPercent": 100,
+    "policyVersion": "2.0-PKR-2026"
+  },
+  "vehicleCategories": [
+    {
+      "id": "small",
+      "name": "Small Car (Hatchback)",
+      "examples": "Alto, Cultus, Swift, Aqua, Picanto",
+      "multiplier": 1,
+      "startingPrice": 1200,
+      "icon": "car-compact"
+    },
+    {
+      "id": "sedan",
+      "name": "Sedan",
+      "examples": "Civic, Corolla, City, Elantra, Yaris",
+      "multiplier": 1.25,
+      "startingPrice": 1500,
+      "icon": "car-sedan"
+    },
+    {
+      "id": "suv",
+      "name": "SUV / Crossover",
+      "examples": "Sportage, Tucson, Vezel, Oshan X7, Haval",
+      "multiplier": 1.65,
+      "startingPrice": 2500,
+      "icon": "car-suv"
+    },
+    {
+      "id": "large_suv",
+      "name": "Large SUV",
+      "examples": "Fortuner, Prado, Land Cruiser, Patrol",
+      "multiplier": 2.2,
+      "startingPrice": 3500,
+      "icon": "car-suv-large"
+    },
+    {
+      "id": "van_pickup",
+      "name": "Pickup / Van",
+      "examples": "Hilux Revo, D-Max, Hiace, Grand Cabin",
+      "multiplier": 2.3,
+      "startingPrice": 3500,
+      "icon": "car-truck"
+    }
+  ],
+  "services": [
+    {
+      "id": "exterior",
+      "name": "Exterior Wash",
+      "shortDesc": "Complete exterior cleaning and shine.",
+      "durationMins": 25,
+      "basePrice": 1200,
+      "image": "/images/service-exterior.jpg",
+      "popular": false,
+      "included": [
+        "High-pressure snow foam pre-wash",
+        "Two-bucket grit guard hand wash",
+        "Undercarriage & wheel arch blast",
+        "Alloy wheel & tire face degreasing",
+        "Microfiber scratch-free towel dry",
+        "Long-lasting silicone tire shine"
+      ],
+      "excluded": [
+        "Interior vacuuming or dusting",
+        "Seat stain extraction",
+        "Machine paint polish"
+      ]
+    },
+    {
+      "id": "interior",
+      "name": "Interior Cleaning",
+      "shortDesc": "Deep cleaning of seats, carpets and interior surfaces.",
+      "durationMins": 40,
+      "basePrice": 1800,
+      "image": "/images/service-interior.jpg",
+      "popular": false,
+      "included": [
+        "Deep high-suction vacuuming (seats, trunk & mats)",
+        "AC vent antibacterial steam sanitization",
+        "Dashboard, console & door panel conditioning",
+        "Streak-free crystal window cleaning (interior)",
+        "Floor mat pressure wash & deodorizer",
+        "Premium automotive air freshener scent"
+      ],
+      "excluded": [
+        "Exterior foam wash",
+        "Engine bay cleaning",
+        "Paint sealant"
+      ]
+    },
+    {
+      "id": "full",
+      "name": "Full Car Wash",
+      "shortDesc": "Complete interior and exterior cleaning.",
+      "durationMins": 55,
+      "basePrice": 2500,
+      "image": "/images/service-full.jpg",
+      "popular": true,
+      "badge": "Most Popular",
+      "included": [
+        "Everything in Exterior Wash package",
+        "Everything in Interior Cleaning package",
+        "Trunk and spare tire well detailing",
+        "Engine bay surface dust wipe-down",
+        "Door jambs & fuel cap steam clean",
+        "UV dashboard & leather protective coat"
+      ],
+      "excluded": [
+        "Paint scratch correction / buffing",
+        "Multi-year ceramic coating"
+      ]
+    },
+    {
+      "id": "detailing",
+      "name": "Premium Detailing",
+      "shortDesc": "Advanced cleaning, polishing and long-lasting protection.",
+      "durationMins": 110,
+      "basePrice": 5000,
+      "image": "/images/service-detailing.jpg",
+      "popular": false,
+      "badge": "Showroom Finish",
+      "included": [
+        "Deep 3-stage foam wash & iron fallout removal",
+        "Clay bar paint decontamination",
+        "Dual-action machine polish & gloss enhancement",
+        "6-Month hydrophobic ceramic spray sealant",
+        "Full interior hot water upholstery shampoo",
+        "Leather conditioning & nourishment treatment",
+        "Full engine bay steam detailing & dressing",
+        "Headlight & taillight clarity restoration"
+      ],
+      "excluded": [
+        "Full vehicle body repainting"
+      ]
+    }
+  ],
+  "addOns": [
+    {
+      "id": "addon_engine",
+      "name": "Engine Bay Steam Detailing",
+      "price": 800,
+      "durationMins": 20,
+      "desc": "Safe degreasing & moisture-proof dressing"
+    },
+    {
+      "id": "addon_ceramic",
+      "name": "Hydrophobic Ceramic Spray Wax",
+      "price": 1200,
+      "durationMins": 25,
+      "desc": "High water beading & 90-day mirror gloss"
+    },
+    {
+      "id": "addon_headlight",
+      "name": "Headlight UV Polish & Restoration",
+      "price": 900,
+      "durationMins": 15,
+      "desc": "Restores cloudy, oxidized yellowish lenses"
+    },
+    {
+      "id": "addon_leather",
+      "name": "Luxury Leather Balm Treatment",
+      "price": 1000,
+      "durationMins": 20,
+      "desc": "Deep hydration to prevent cracks & aging"
+    },
+    {
+      "id": "addon_ozone",
+      "name": "Anti-Bacterial Ozone Odor Neutralizer",
+      "price": 700,
+      "durationMins": 15,
+      "desc": "Eliminates smoke, pet & mildew odors"
+    }
+  ],
+  "bays": [
+    {
+      "id": "bay_1",
+      "name": "Bay 1 (Express Wash)",
+      "branchId": "b1",
+      "type": "Wash",
+      "active": true
+    },
+    {
+      "id": "bay_2",
+      "name": "Bay 2 (Full Service & Interior)",
+      "branchId": "b1",
+      "type": "Full",
+      "active": true
+    },
+    {
+      "id": "bay_3",
+      "name": "Bay 3 (Detailing & Ceramic Studio)",
+      "branchId": "b1",
+      "type": "Detailing",
+      "active": true
+    }
+  ],
+  "staff": [
+    {
+      "id": "st_1",
+      "name": "Hanzala Tariq",
+      "role": "admin",
+      "roleName": "Owner / Administrator",
+      "email": "admin@hanzalacarwash.com",
+      "phone": "0300-8492000"
+    },
+    {
+      "id": "st_2",
+      "name": "Bilawal Sheikh",
+      "role": "manager",
+      "roleName": "Operations Manager",
+      "email": "manager@hanzalacarwash.com",
+      "phone": "0300-8492001"
+    },
+    {
+      "id": "st_3",
+      "name": "Tariq Mehmood",
+      "role": "receptionist",
+      "roleName": "Front Desk & Check-in",
+      "email": "reception@hanzalacarwash.com",
+      "phone": "0300-8492002"
+    },
+    {
+      "id": "st_4",
+      "name": "Ali Raza",
+      "role": "operator",
+      "roleName": "Senior Detailer / Staff",
+      "email": "ali@hanzalacarwash.com",
+      "phone": "0300-8492003"
+    },
+    {
+      "id": "st_5",
+      "name": "Hamza Khan",
+      "role": "operator",
+      "roleName": "Wash Operator",
+      "email": "hamza@hanzalacarwash.com",
+      "phone": "0300-8492004"
+    },
+    {
+      "id": "st_6",
+      "name": "Sara Ahmed",
+      "role": "finance",
+      "roleName": "Finance & Accounts",
+      "email": "finance@hanzalacarwash.com",
+      "phone": "0300-8492005"
+    }
+  ],
+  "coupons": [
+    {
+      "code": "WELCOME10",
+      "discountType": "percent",
+      "value": 10,
+      "minSpend": 1000,
+      "description": "10% OFF for new customers",
+      "usageCount": 42,
+      "maxUsage": 500,
+      "active": true
+    },
+    {
+      "code": "PREMIUM20",
+      "discountType": "percent",
+      "value": 20,
+      "minSpend": 4000,
+      "description": "20% OFF on Detailing packages",
+      "usageCount": 18,
+      "maxUsage": 100,
+      "active": true
+    },
+    {
+      "code": "HANZALA500",
+      "discountType": "fixed",
+      "value": 500,
+      "minSpend": 2500,
+      "description": "Flat Rs. 500 OFF on Full Wash",
+      "usageCount": 65,
+      "maxUsage": 200,
+      "active": true
+    }
+  ],
+  "loyaltyConfig": {
+    "pointsPer100Spent": 1,
+    "pointRedemptionValuePKR": 2,
+    "maxPointsRedeemPercent": 20
+  },
+  "auth": {
+    "isLoggedIn": true,
+    "userRole": "customer",
+    "user": {
+      "id": "cust_101",
+      "name": "Muhammad Ali",
+      "phone": "+92 301 5558899",
+      "email": "m.ali@gmail.com",
+      "loyaltyPoints": 340,
+      "savedVehicles": [
+        {
+          "id": "v1",
+          "make": "Honda",
+          "model": "Civic RS",
+          "year": "2023",
+          "categoryId": "sedan",
+          "regNumber": "LEA-23-9912",
+          "color": "Taffeta White"
+        },
+        {
+          "id": "v2",
+          "make": "Toyota",
+          "model": "Fortuner Legender",
+          "year": "2022",
+          "categoryId": "large_suv",
+          "regNumber": "ISB-22-4411",
+          "color": "Attitude Black"
+        }
+      ]
+    }
+  },
+  "bookings": [
+    {
+      "id": "HCW-2026-6264",
+      "customerName": "Muhammad Ali",
+      "customerPhone": "+92 301 5558899",
+      "customerEmail": "m.ali@gmail.com",
+      "vehicleMake": "Honda",
+      "vehicleModel": "Civic RS",
+      "vehicleReg": "LEA-23-9912",
+      "categoryId": "sedan",
+      "serviceId": "full",
+      "serviceName": "Full Car Wash",
+      "addOns": [],
+      "branchId": "b1",
+      "bayId": "bay_1",
+      "assignedStaffId": null,
+      "bookingDate": "2026-10-28",
+      "bookingTime": "12:00 PM",
+      "durationMins": 55,
+      "basePrice": 3125,
+      "addOnPrice": 0,
+      "discountAmount": 0,
+      "taxAmount": 0,
+      "totalAmount": 3125,
+      "paymentMethod": "Card (Visa / Mastercard)",
+      "paymentStatus": "Paid",
+      "bookingStatus": "Confirmed",
+      "checkInTime": null,
+      "completionTime": null,
+      "serviceNotes": "",
+      "qrToken": "HCW-QR-6264-MVWRSHLO",
+      "createdAt": "2026-10-31 19:04",
+      "statusHistory": [
+        {
+          "status": "Confirmed",
+          "timestamp": "12:04 AM",
+          "actor": "Customer Online Booking"
+        }
+      ]
+    },
+    {
+      "id": "HCW-2026-9182",
+      "customerName": "Ali Raza Khan",
+      "customerPhone": "0300-1234567",
+      "customerEmail": "ali.raza@gmail.com",
+      "vehicleMake": "Honda",
+      "vehicleModel": "Civic Oriel",
+      "vehicleReg": "LEA-22-1144",
+      "categoryId": "sedan",
+      "serviceId": "full",
+      "serviceName": "Full Car Wash",
+      "addOns": [
+        "addon_ceramic"
+      ],
+      "branchId": "b1",
+      "bayId": "bay_2",
+      "assignedStaffId": "st_4",
+      "bookingDate": "2026-10-28",
+      "bookingTime": "10:00 AM",
+      "durationMins": 80,
+      "basePrice": 1875,
+      "addOnPrice": 1200,
+      "discountAmount": 200,
+      "taxAmount": 0,
+      "totalAmount": 2875,
+      "paymentMethod": "Card (Mastercard)",
+      "paymentStatus": "Paid",
+      "bookingStatus": "In Progress",
+      "checkInTime": "2026-10-28 09:55 AM",
+      "completionTime": null,
+      "serviceNotes": "Customer requested special care around ceramic front bumper.",
+      "inspectionChecklist": {
+        "scratchesNoted": true,
+        "personalBelongingsRemoved": true
+      },
+      "qrToken": "HCW-QR-9182-SECURE",
+      "createdAt": "2026-10-27 18:30",
+      "statusHistory": [
+        {
+          "status": "Confirmed",
+          "timestamp": "2026-10-27 18:30",
+          "actor": "Customer Checkout"
+        },
+        {
+          "status": "Checked In",
+          "timestamp": "2026-10-28 09:55 AM",
+          "actor": "Tariq Mehmood (Front Desk)"
+        },
+        {
+          "status": "In Progress",
+          "timestamp": "2026-10-28 10:05 AM",
+          "actor": "Ali Raza (Detailer)"
+        }
+      ]
+    },
+    {
+      "id": "HCW-2026-8841",
+      "customerName": "Sara Khan",
+      "customerPhone": "0321-9876543",
+      "customerEmail": "sara.k@gmail.com",
+      "vehicleMake": "Kia",
+      "vehicleModel": "Sportage AWD",
+      "vehicleReg": "LHE-21-5588",
+      "categoryId": "suv",
+      "serviceId": "exterior",
+      "serviceName": "Exterior Wash",
+      "addOns": [],
+      "branchId": "b1",
+      "bayId": "bay_1",
+      "assignedStaffId": "st_5",
+      "bookingDate": "2026-10-28",
+      "bookingTime": "11:00 AM",
+      "durationMins": 25,
+      "basePrice": 1980,
+      "addOnPrice": 0,
+      "discountAmount": 0,
+      "taxAmount": 0,
+      "totalAmount": 1980,
+      "paymentMethod": "JazzCash",
+      "paymentStatus": "Paid",
+      "bookingStatus": "Completed",
+      "checkInTime": "2026-10-28 10:50 AM",
+      "completionTime": "2026-10-28 11:20 AM",
+      "serviceNotes": "Exterior dried and buffed with microfiber.",
+      "qrToken": "HCW-QR-8841-SECURE",
+      "createdAt": "2026-10-27 14:15",
+      "statusHistory": [
+        {
+          "status": "Confirmed",
+          "timestamp": "2026-10-27 14:15",
+          "actor": "Customer Checkout"
+        },
+        {
+          "status": "Checked In",
+          "timestamp": "2026-10-28 10:50 AM",
+          "actor": "Tariq Mehmood"
+        },
+        {
+          "status": "In Progress",
+          "timestamp": "2026-10-28 10:55 AM",
+          "actor": "Hamza Khan"
+        },
+        {
+          "status": "Completed",
+          "timestamp": "2026-10-28 11:20 AM",
+          "actor": "Hamza Khan"
+        }
+      ]
+    },
+    {
+      "id": "HCW-2026-7729",
+      "customerName": "Bilal Ahmed",
+      "customerPhone": "0333-4455667",
+      "customerEmail": "bilal.ahmed@outlook.com",
+      "vehicleMake": "Hyundai",
+      "vehicleModel": "Tucson",
+      "vehicleReg": "ICT-20-7711",
+      "categoryId": "suv",
+      "serviceId": "interior",
+      "serviceName": "Interior Cleaning",
+      "addOns": [
+        "addon_ozone"
+      ],
+      "branchId": "b1",
+      "bayId": "bay_2",
+      "assignedStaffId": "st_4",
+      "bookingDate": "2026-10-28",
+      "bookingTime": "12:00 PM",
+      "durationMins": 55,
+      "basePrice": 2970,
+      "addOnPrice": 700,
+      "discountAmount": 300,
+      "taxAmount": 0,
+      "totalAmount": 3370,
+      "paymentMethod": "EasyPaisa",
+      "paymentStatus": "Paid",
+      "bookingStatus": "Completed",
+      "checkInTime": "2026-10-28 11:58 AM",
+      "completionTime": "2026-10-28 12:50 PM",
+      "serviceNotes": "Pet hair removed from backseat.",
+      "qrToken": "HCW-QR-7729-SECURE",
+      "createdAt": "2026-10-26 11:10",
+      "statusHistory": [
+        {
+          "status": "Confirmed",
+          "timestamp": "2026-10-26 11:10",
+          "actor": "Customer Checkout"
+        },
+        {
+          "status": "Checked In",
+          "timestamp": "2026-10-28 11:58 AM",
+          "actor": "Tariq Mehmood"
+        },
+        {
+          "status": "Completed",
+          "timestamp": "2026-10-28 12:50 PM",
+          "actor": "Ali Raza"
+        }
+      ]
+    },
+    {
+      "id": "HCW-2026-6540",
+      "customerName": "Usman Malik",
+      "customerPhone": "0302-8889911",
+      "customerEmail": "usman.m@yahoo.com",
+      "vehicleMake": "Toyota",
+      "vehicleModel": "Land Cruiser V8",
+      "vehicleReg": "LXZ-19-0001",
+      "categoryId": "large_suv",
+      "serviceId": "detailing",
+      "serviceName": "Premium Detailing",
+      "addOns": [
+        "addon_ceramic",
+        "addon_engine",
+        "addon_leather"
+      ],
+      "branchId": "b1",
+      "bayId": "bay_3",
+      "assignedStaffId": "st_4",
+      "bookingDate": "2026-10-28",
+      "bookingTime": "01:00 PM",
+      "durationMins": 175,
+      "basePrice": 11000,
+      "addOnPrice": 3000,
+      "discountAmount": 1000,
+      "taxAmount": 0,
+      "totalAmount": 13000,
+      "paymentMethod": "Pay on Site (Cash / POS)",
+      "paymentStatus": "Pending",
+      "bookingStatus": "Confirmed",
+      "checkInTime": null,
+      "completionTime": null,
+      "serviceNotes": "Customer requested leather protection on beige interior.",
+      "qrToken": "HCW-QR-6540-SECURE",
+      "createdAt": "2026-10-27 21:00",
+      "statusHistory": [
+        {
+          "status": "Confirmed",
+          "timestamp": "2026-10-27 21:00",
+          "actor": "Customer Online"
+        }
+      ]
+    },
+    {
+      "id": "HCW-2026-5121",
+      "customerName": "Muhammad Ali",
+      "customerPhone": "+92 301 5558899",
+      "customerEmail": "m.ali@gmail.com",
+      "vehicleMake": "Honda",
+      "vehicleModel": "Civic RS",
+      "vehicleReg": "LEA-23-9912",
+      "categoryId": "sedan",
+      "serviceId": "full",
+      "serviceName": "Full Car Wash",
+      "addOns": [
+        "addon_ceramic"
+      ],
+      "branchId": "b1",
+      "bayId": "bay_2",
+      "assignedStaffId": null,
+      "bookingDate": "2026-10-28",
+      "bookingTime": "03:30 PM",
+      "durationMins": 80,
+      "basePrice": 3125,
+      "addOnPrice": 1200,
+      "discountAmount": 432,
+      "taxAmount": 0,
+      "totalAmount": 3893,
+      "paymentMethod": "Raast Instant Transfer",
+      "paymentStatus": "Paid",
+      "bookingStatus": "Confirmed",
+      "checkInTime": null,
+      "completionTime": null,
+      "serviceNotes": "Please pay extra attention to door sills.",
+      "qrToken": "HCW-QR-5121-SECURE",
+      "createdAt": "2026-10-28 00:45",
+      "statusHistory": [
+        {
+          "status": "Confirmed",
+          "timestamp": "2026-10-28 00:45",
+          "actor": "Customer Checkout"
+        }
+      ]
+    },
+    {
+      "id": "HCW-2026-4402",
+      "customerName": "Zainab Bibi",
+      "customerPhone": "0345-9988771",
+      "customerEmail": "zainab@gmail.com",
+      "vehicleMake": "Suzuki",
+      "vehicleModel": "Swift GLX",
+      "vehicleReg": "LEB-24-3321",
+      "categoryId": "small",
+      "serviceId": "exterior",
+      "serviceName": "Exterior Wash",
+      "addOns": [],
+      "branchId": "b1",
+      "bayId": "bay_1",
+      "assignedStaffId": null,
+      "bookingDate": "2026-10-27",
+      "bookingTime": "04:00 PM",
+      "durationMins": 25,
+      "basePrice": 1200,
+      "addOnPrice": 0,
+      "discountAmount": 120,
+      "taxAmount": 0,
+      "totalAmount": 1080,
+      "paymentMethod": "JazzCash",
+      "paymentStatus": "Refunded",
+      "bookingStatus": "Cancelled",
+      "cancellationReason": "Customer had an urgent flight reschedule",
+      "refundDetails": {
+        "originalAmount": 1080,
+        "deductionPercent": 5,
+        "deductionAmount": 54,
+        "refundedAmount": 1026,
+        "refundedAt": "2026-10-27 15:10",
+        "approvedBy": "Sara Ahmed (Finance)"
+      },
+      "qrToken": "HCW-QR-4402-SECURE",
+      "createdAt": "2026-10-26 19:20",
+      "statusHistory": [
+        {
+          "status": "Confirmed",
+          "timestamp": "2026-10-26 19:20",
+          "actor": "Customer"
+        },
+        {
+          "status": "Cancellation Requested",
+          "timestamp": "2026-10-27 15:05",
+          "actor": "Customer"
+        },
+        {
+          "status": "Cancelled",
+          "timestamp": "2026-10-27 15:10",
+          "actor": "System Refund Engine"
+        }
+      ]
+    }
+  ],
+  "reviews": [
+    {
+      "id": "rev_1",
+      "bookingId": "HCW-2026-8841",
+      "customerName": "Sara Khan",
+      "rating": 5,
+      "serviceName": "Exterior Wash",
+      "vehicle": "Kia Sportage",
+      "comment": "Absolutely outstanding quality! The snow foam wash and undercarriage cleaning made my SUV look brand new. The staff was professional and finished right on time.",
+      "date": "2026-10-28",
+      "verifiedBooking": true,
+      "adminResponse": "Thank you Sara! Glad to serve your Sportage. Looking forward to your next visit!"
+    },
+    {
+      "id": "rev_2",
+      "bookingId": "HCW-2026-7729",
+      "customerName": "Bilal Ahmed",
+      "rating": 5,
+      "serviceName": "Interior Cleaning & Ozone",
+      "vehicle": "Hyundai Tucson",
+      "comment": "Best interior detailing in Lahore. The ozone treatment completely eliminated pet odors, and the leather seats feel soft and hydrated without any greasy residue.",
+      "date": "2026-10-28",
+      "verifiedBooking": true,
+      "adminResponse": "Appreciate your kind words Bilal! Our steam and ozone treatment is designed specifically for deep hygiene."
+    },
+    {
+      "id": "rev_3",
+      "bookingId": "HCW-2026-9012",
+      "customerName": "Kamran Shah",
+      "rating": 5,
+      "serviceName": "Premium Detailing & Ceramic",
+      "vehicle": "Audi A6",
+      "comment": "Incredible attention to detail. Ali Raza worked on my car for nearly 2 hours with the rotary polisher. The mirror reflection and ceramic hydrophobic water beading are top tier.",
+      "date": "2026-10-25",
+      "verifiedBooking": true,
+      "adminResponse": "Honored to detail your Audi A6, Kamran! Drive safe with that mirror shine."
+    }
+  ],
+  "auditLogs": [
+    {
+      "id": "log_1793473459013_69",
+      "action": "BOOKING_CREATED",
+      "details": "New booking HCW-2026-6264 created for Muhammad Ali (Rs. 3125)",
+      "actor": "Muhammad Ali",
+      "timestamp": "2026-10-31 19:04:19"
+    },
+    {
+      "id": "log_1793163547796_436",
+      "action": "RESET_DEMO_DATA",
+      "details": "System re-seeded with demo records for interactive presentation.",
+      "actor": "Administrator",
+      "timestamp": "2026-10-28 04:59:07"
+    },
+    {
+      "id": "log_1",
+      "action": "SYSTEM_INIT",
+      "details": "Hanzala Car Wash booking engine initialized with Version 2.0 specs",
+      "actor": "System",
+      "timestamp": "2026-10-26 08:00:00"
+    },
+    {
+      "id": "log_2",
+      "action": "REFUND_PROCESSED",
+      "details": "Refund of Rs. 1,026 approved for booking HCW-2026-4402 (5% deduction Rs. 54 applied)",
+      "actor": "Sara Ahmed (Finance)",
+      "timestamp": "2026-10-27 15:10:22"
+    },
+    {
+      "id": "log_3",
+      "action": "CHECKIN_RECORDED",
+      "details": "Vehicle LEA-22-1144 checked in at Bay 2",
+      "actor": "Tariq Mehmood",
+      "timestamp": "2026-10-28 09:55:00"
+    }
+  ]
+}

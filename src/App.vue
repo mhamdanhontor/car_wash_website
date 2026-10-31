@@ -14,6 +14,7 @@
         @open-booking="openBookingWizard()"
         @open-account="showAccountModal = true"
         @open-admin="viewMode = 'admin'"
+        @open-policy="openPolicyModal"
       />
 
       <main>
